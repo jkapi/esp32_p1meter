@@ -34,8 +34,8 @@ bool mqttReconnect()
 
 void sendMetric(String name, long metric)
 {
-    if (metric > 0)
-    {
+    //if (metric > 0)
+    //{
         char output[10];
         ltoa(metric, output, sizeof(output));
 
@@ -44,7 +44,7 @@ void sendMetric(String name, long metric)
         Serial.println(topic);
 #endif
         sendMQTTMessage(topic.c_str(), output);
-    }
+    //}
 }
 
 void sendDataToBroker()

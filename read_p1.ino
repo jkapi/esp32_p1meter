@@ -128,11 +128,11 @@ bool decodeTelegram(int len)
                 telegramObjects[i].value = newValue;
                 telegramObjects[i].sendData = true;
             }
-            break;
 
 #ifdef DEBUG
             Serial.println((String) "Found a Telegram object: " + telegramObjects[i].name + " value: " + telegramObjects[i].value);
 #endif
+            break;
         }
     }
 

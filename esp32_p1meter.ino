@@ -13,8 +13,8 @@ PubSubClient mqttClient(espClient);
 void setup()
 {
     // Initialize pins
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, LOW);
+    //pinMode(LED_BUILTIN, OUTPUT);
+    //digitalWrite(LED_BUILTIN, LOW);
     Serial.begin(BAUD_RATE);
     Serial2.begin(BAUD_RATE, SERIAL_8N1, RXD2, TXD2, true);
 
@@ -96,7 +96,7 @@ void loop()
     }
 
     // Check if we want a full update of all the data including the unchanged data.
-    if (now - LAST_FULL_UPDATE_SENT > UPDATE_FULL_INTERVAL)
+    if (true)
     {
         for (int i = 0; i < NUMBER_OF_READOUTS; i++)
         {
@@ -151,61 +151,61 @@ void setupDataReadout()
     telegramObjects[2].endChar = '*';
 
     // 1-0:2.7.0(00.000*kW) Actuele teruglevering (-P) in 1 Watt resolution
-    telegramObjects[3].name = "actual_received";
+    telegramObjects[3].name = "actual_returndelivery";
     strcpy(telegramObjects[3].code, "1-0:2.7");
     telegramObjects[3].endChar = '*';
 
     // 1-0:21.7.0(00.378*kW)
     // 1-0:21.7.0 = Instantaan vermogen Elektriciteit levering L1
-    telegramObjects[4].name = "instant_power_usage_l1";
+    telegramObjects[4].name = "l1_instant_power_usage";
     strcpy(telegramObjects[4].code, "1-0:21.7.0");
     telegramObjects[4].endChar = '*';
 
     // 1-0:41.7.0(00.378*kW)
     // 1-0:41.7.0 = Instantaan vermogen Elektriciteit levering L2
-    telegramObjects[5].name = "instant_power_usage_l2";
+    telegramObjects[5].name = "l2_instant_power_usage";
     strcpy(telegramObjects[5].code, "1-0:41.7.0");
     telegramObjects[5].endChar = '*';
 
     // 1-0:61.7.0(00.378*kW)
     // 1-0:61.7.0 = Instantaan vermogen Elektriciteit levering L3
-    telegramObjects[6].name = "instant_power_usage_l3";
+    telegramObjects[6].name = "l3_instant_power_usage";
     strcpy(telegramObjects[6].code, "1-0:61.7.0");
     telegramObjects[6].endChar = '*';
 
     // 1-0:31.7.0(002*A)
     // 1-0:31.7.0 = Instantane stroom Elektriciteit L1
-    telegramObjects[7].name = "instant_power_current_l1";
+    telegramObjects[7].name = "l1_instant_power_current";
     strcpy(telegramObjects[7].code, "1-0:31.7.0");
     telegramObjects[7].endChar = '*';
 
     // 1-0:51.7.0(002*A)
     // 1-0:51.7.0 = Instantane stroom Elektriciteit L2
-    telegramObjects[8].name = "instant_power_current_l2";
+    telegramObjects[8].name = "l2_instant_power_current";
     strcpy(telegramObjects[8].code, "1-0:51.7.0");
     telegramObjects[8].endChar = '*';
 
     // 1-0:71.7.0(002*A)
     // 1-0:71.7.0 = Instantane stroom Elektriciteit L3
-    telegramObjects[9].name = "instant_power_current_l3";
+    telegramObjects[9].name = "l3_instant_power_current";
     strcpy(telegramObjects[9].code, "1-0:71.7.0");
     telegramObjects[9].endChar = '*';
 
     // 1-0:32.7.0(232.0*V)
     // 1-0:32.7.0 = Voltage L1
-    telegramObjects[10].name = "instant_voltage_l1";
+    telegramObjects[10].name = "l1_voltage";
     strcpy(telegramObjects[10].code, "1-0:32.7.0");
     telegramObjects[10].endChar = '*';
 
     // 1-0:52.7.0(232.0*V)
     // 1-0:52.7.0 = Voltage L2
-    telegramObjects[11].name = "instant_voltage_l2";
+    telegramObjects[11].name = "l2_voltage";
     strcpy(telegramObjects[11].code, "1-0:52.7.0");
     telegramObjects[11].endChar = '*';
 
     // 1-0:72.7.0(232.0*V)
     // 1-0:72.7.0 = Voltage L3
-    telegramObjects[12].name = "instant_voltage_l3";
+    telegramObjects[12].name = "l3_voltage";
     strcpy(telegramObjects[12].code, "1-0:72.7.0");
     telegramObjects[12].endChar = '*';
 
@@ -238,6 +238,20 @@ void setupDataReadout()
     // 0-1:24.2.1 = Gas (DSMR v4.0) on Kaifa MA105 meter
     telegramObjects[18].name = "gas_meter_m3";
     strcpy(telegramObjects[18].code, "0-1:24.2.1");
+    telegramObjects[18].endChar = '*';
+
+    // 1-0:2.8.1(000596.853*kWh)
+    // 1-0:2.8.1 = Elektra teruglevering laag tarief (DSMR v4.0)
+    telegramObjects[19].name = "returndelivery_low_tarif";
+    strcpy(telegramObjects[19].code, "1-0:2.8.1");
+    telegramObjects[19].endChar = '*';
+    
+
+    // 1-0:2.8.2(001441.564*kWh)
+    // 1-0:2.8.2 = Elektra teruglevering hoog tarief (DSMR v4.0)
+    telegramObjects[20].name = "returndelivery_high_tarif";
+    strcpy(telegramObjects[20].code, "1-0:2.8.2");
+    telegramObjects[20].endChar = '*';
 
 #ifdef DEBUG
     Serial.println("MQTT Topics initialized:");
